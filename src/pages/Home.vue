@@ -64,10 +64,12 @@ export default {
         // Sort alphabetical by location
         // BUG: lowercase items go to bottom of list
         .sort(function (a, b) {
-          if (a.value < b.value) {
+          let x = a.value.toLowerCase();
+          let y = b.value.toLowerCase();
+          if (x < y) {
             return -1;
           }
-          if (a.value > b.value) {
+          if (x > y) {
             return 1;
           }
           return 0;
