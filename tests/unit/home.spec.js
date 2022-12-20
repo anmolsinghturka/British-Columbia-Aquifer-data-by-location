@@ -11,7 +11,7 @@ describe('Home', () => {
     localVue,
     data() {
       return {
-        selectedLocation: 'here',
+        selectedLocation: 'Please select a location',
         aquifers: [
           // A 'Please select' option should be inserted
           { location: 'here' },
@@ -27,10 +27,17 @@ describe('Home', () => {
     }
   })
   it('Check selectedLocation data', () => {
-    expect(wrapper.find('#selectedLocationContainer strong').text()).toMatch('here')
+    expect(wrapper.find('#selectedLocationContainer strong').text()).toMatch('Please select a location')
     expect(wrapper.find('#selectLocation option').exists()).toBeTruthy()
-    // TODO: create a test that simulates a change in selection
   })
+
+  it('Display aquifer details by location', async () => {
+    await wrapper.setData({selectedLocation: 'Nowhere'})
+    expect(wrapper.findAll('option').at(4).text()).toBe('Nowhere')
+    //table to show details of selected location
+    expect(wrapper.find('#selectedLocationDetail table').exists()).toBeTruthy()
+  })
+
   // Begin known failing test
   it('Check alpha order', () => {
     expect(wrapper.findAll('option').at(1).text()).toBe('123 test ave')
