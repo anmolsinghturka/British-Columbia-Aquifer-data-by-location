@@ -1,0 +1,23 @@
+---
+version: "3.8"
+
+services:
+  app:
+    container_name: app
+    entrypoint:
+      - "sh"
+      - "-c"
+      - "npm i && npm run serve"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    image: node:16
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/app:z
+      - /app/node_modules
+    working_dir: "/app"
